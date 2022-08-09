@@ -1,9 +1,18 @@
 USE slim_api;
 
-CREATE TABLE users ();
+CREATE TABLE users (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    CONSTRAINT CHK_age CHECK (age >= 18)
+);
 
-CREATE TABLE user_photos ();
+CREATE TABLE user_photos (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+);
 
-CREATE TABLE user_statistics ();
+CREATE TABLE user_statistics (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+);
 
-CREATE TABLE user_matches ();
+CREATE TABLE user_matches (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+);
