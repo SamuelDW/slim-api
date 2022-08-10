@@ -11,12 +11,16 @@ class DeleteUserAction
 {
     public function __invoke(Request $request, Response $response): Response
     {
-        $userId = $request->getAttribute('id');
-        $userExists = UserRepository::doesUserExist($userId);
+        $userData = $request->getParsedBody();
+        $userRepository = new UserRepository();
+        $userExists = $userRepository->findUserByEmail($userData['email']);
         if (!$userExists) {
             return '';
         }
 
-        UserRepository::deleteUser($userId);
+        $userRepository->deleteUser($userExists['id']);
+
+        $response->getBody()->write('');
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }

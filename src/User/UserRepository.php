@@ -71,7 +71,23 @@ class UserRepository
             'name' => $user->getName(),
             'gender' => $user->getGender(),
             'age' => $user->getAge(),
-            'location' => 'UK',
+            'location' => $user->getLocation(),
         ]);
+    }
+
+    public function deleteUser($userId)
+    {
+
+    }
+
+    public function findUserById($userId)
+    {
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare('SELECT * FROM users WHERE id=:id');
+        $stmt->execute(['id' => $userId]);
+
+        $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $user;
     }
 }

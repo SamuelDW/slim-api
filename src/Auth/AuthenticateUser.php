@@ -62,10 +62,5 @@ final class AuthenticateUser
 
         $response->getBody()->write(json_encode(['Succes' => 'You are logged in']));
         return $response->withHeader('Content-Type', 'application/json');
-
-        // $userCorrectlyAuthenticated = true;
-        // if ($userExists && $userCorrectlyAuthenticated) {
-        //     return $response->withHeader('Content-Type', 'application/json');
-        // }
     }
 }
