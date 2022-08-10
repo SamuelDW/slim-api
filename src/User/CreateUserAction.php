@@ -7,8 +7,9 @@ namespace App\User;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\User\MissingFieldsError;
+use \App\User\User;
 
-final class CreateUserAction
+class CreateUserAction
 {
     private const NUMBER_OF_USER_FIELDS = 5;
 
@@ -32,12 +33,23 @@ final class CreateUserAction
         }
 
         if (count($errors) > 0) {
-            $errorResponse = MissingFieldsError::createErrorResponse($errors, $request->getMethod(), $userData, 'Errors Present in Data');
+            $errorResponse = MissingFieldsError::createErrorResponse(
+                $errors,
+                $request->getMethod(),
+                $userData,
+                'Errors Present in Data'
+            );
             $response->getBody()->write(json_encode($errorResponse));
 
             return $response->withHeader('Content-Type', 'application/json');
         }
-        //$response->getBody()->write(json_encode($error));
+
+        $hashedPassword = password_hash($userData['password'], PASSWORD_DEFAULT);
+        $user = new User($userData['name'], $userData['email'], $hashedPassword, $userData['gender'], $userData['age']);
+
+        $userRepository = new UserRepository();
+        $userRepository->createUser($user);
+
         return $response->withHeader('Content-Type', 'application/json');
     }
 }

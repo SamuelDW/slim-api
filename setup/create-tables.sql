@@ -1,18 +1,44 @@
 USE slim_api;
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    gender VARCHAR(255) NOT NULL,
+    age INT(3) NOT NULL,
+    location VARCHAR(255) NOT NULL,
     CONSTRAINT CHK_age CHECK (age >= 18)
 );
 
-CREATE TABLE user_photos (
+CREATE TABLE IF NOT EXISTS user_photos (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(6) UNSIGNED NOT NULL,
+    linkToImage VARCHAR(255) NOT NULL,
+    CONSTRAINT FK_UserPhotos FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE user_statistics (
+CREATE TABLE IF NOT EXISTS user_statistics (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(6) UNSIGNED NOT NULL,
+    swipe_yes INT(6) UNSIGNED NOT NULL,
+    swipe_no INT(6) UNSIGNED NOT NULL,
+    attract_rating INT(3) UNSIGNED NOT NULL,
+    CONSTRAINT FK_UserStatistics FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE user_matches (
+CREATE TABLE IF NOT EXISTS user_matches (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(6) UNSIGNED NOT NULL,
+    match_id INT(6) UNSIGNED NOT NULL,
+    CONSTRAINT FK_UserMatches FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT FK_UserMatch FOREIGN KEY (match_id) REFERENCES users(id)
 );
+
+CREATE TABLE IF NOT EXISTS user_sessions (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(6) UNSIGNED NOT NULL,
+    session_id VARCHAR(255) NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FK_UserSession FOREIGN KEY (user_id) REFERENCES users(id)
+)
