@@ -53,14 +53,14 @@ final class AuthenticateUser
             $userRepository->registerSession($user[0]['id'], $sessionId);
             $_SESSION['session_id'] = $sessionId;
 
-            $response->getBody()->write(json_encode(['Succes' => 'You are logged in']));
+            $response->getBody()->write(json_encode(['Succes' => 'You are logged in', 'Your Token is' => $sessionId]));
             return $response->withHeader('Content-Type', 'application/json');
         }
 
         // set the session
         $_SESSION['session_id'] = $isSessionExist[0]['session_id'];
 
-        $response->getBody()->write(json_encode(['Succes' => 'You are logged in']));
+        $response->getBody()->write(json_encode(['Succes' => 'You are logged in', 'Your Token is' => $isSessionExist[0]['session_id']]));
         return $response->withHeader('Content-Type', 'application/json');
     }
 }

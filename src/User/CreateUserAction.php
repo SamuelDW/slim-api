@@ -23,9 +23,17 @@ class CreateUserAction
     public function __invoke(Request $request, Response $response): Response
     {
         $userData = $request->getParsedBody();
+        $userRepository = new UserRepository();
+
         $errors = [];
         if (count($userData) === 0 || count($userData) < self::NUMBER_OF_USER_FIELDS) {
-            $errors['Invalid Data'] = 'You are missing data. There should be name, email, age, gender and password';
+            $email = 'test' . random_int(0, 100000) . '@test.com';
+            $user = new User('test', $email, password_hash('test', PASSWORD_DEFAULT), 'Male', random_int(18, 100));
+            $userRepository->createUser($user);
+            $response->getBody()->write('User created');
+
+            return $response->withHeader('Content-Type', 'application/json');
+            //$errors['Invalid Data'] = 'You are missing data. There should be name, email, age, gender and password';
         }
 
         if ($userData['age'] < 18) {
@@ -47,7 +55,6 @@ class CreateUserAction
         $hashedPassword = password_hash($userData['password'], PASSWORD_DEFAULT);
         $user = new User($userData['name'], $userData['email'], $hashedPassword, $userData['gender'], $userData['age']);
 
-        $userRepository = new UserRepository();
         $userRepository->createUser($user);
 
         return $response->withHeader('Content-Type', 'application/json');

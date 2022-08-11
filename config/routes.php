@@ -15,15 +15,19 @@ return function (App $app) {
     $app->group('/user', function (RouteCollectorProxy $group) {
         $group->post('/create', CreateUserAction::class);
 
+        // Add Auth Middleware
         $group->post('/gallery', UploadUserPhotos::class);
 
+        // Add Auth Middleware
         $group->delete('/delete/{id:[0-9]+}', DeleteUserAction::class);
     });
 
     $app->post('/login', AuthenticateUser::class);
 
+    // Add auth middleware
     $app->get('/profiles/{id:[0-9]+}', getUserMatches::class);
 
+    // Add auth middleware
     $app->post('/swipe', MatchUsers::class);
 };
 

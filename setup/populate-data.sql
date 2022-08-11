@@ -102,7 +102,7 @@ VALUES
   ("sociosqu.ad.litora@yahoo.couk","$2y$10$Z2YmiQr08Mv1B.2dOj.5WO7a5RnOkbOSJMgs/31G.Gs5biazore2S","Hop","Male",49,"Western Sahara"),
   ("donec.nibh@protonmail.com","$2y$10$Z3YmiQr08MR41.2dOj.5WO6a5RnOkbUSJMts/91G.Gs5biazore2S","Halee","Female",99,"Andorra"),
   ("laoreet.ipsum@protonmail.ca","$2y$10$Z0YmiQr08MN5A.2dOj.5WO3a7RnOkbUSJMds/41G.Gs5biazore2S","Merrill","Female",34,"Sao Tome and Principe"),
-  ('test@test.com', '$2y$10$Z0YmiQr08MN5A.2dOj.5WO3a7RnOkbUSJMds/41G.Gs5biazore2S', 'Sam', 'Make', 23, 'Bali');
+  ('test@test.com', '$2y$10$Z0YmiQr08MN5A.2dOj.5WO3a7RnOkbUSJMds/41G.Gs5biazore2S', 'Sam', 'Male', 23, 'Bali');
 
 INSERT INTO user_statistics (user_id, attract_rating)
 VALUES

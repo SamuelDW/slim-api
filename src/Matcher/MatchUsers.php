@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Matcher;
 
 use App\Matcher\MatchRepository;
-use App\User\UserRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -39,6 +38,6 @@ final class MatchUsers
         }
 
         $response->getBody()->write('Keep Searching!');
-            return $response->withHeader('Content-Type', 'application/json');
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }

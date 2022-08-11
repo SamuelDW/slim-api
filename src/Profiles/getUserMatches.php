@@ -20,10 +20,12 @@ final class getUserMatches
         $user = $userRepository->findUserById($userId);
 
         if (!$user) {
-
+            $response->getBody()->write('User not found');
+            return $response->withHeader('Content-Type', 'application/json');
         }
 
         $queryParams = $request->getQueryParams();
+
         if (!$queryParams) {
             $profiles = $profileRepository->getAllProfiles($user[0]['id']);
 
@@ -31,9 +33,32 @@ final class getUserMatches
             return $response->withHeader('Content-Type', 'application/json');
         }
 
-        $age = $queryParams['age'];
-        $ageRange = $queryParams['age_range'];
-        $attractiveness = $queryParams['attractiveness'];
+        if ($queryParams['age'] && $queryParams['gender']) {
+            $profiles = $profileRepository->getUsersByGenderAndAge($queryParams['age'], $queryParams['gender'], $user[0]['id']);
+            $response->getBody()->write(json_encode($profiles));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
+
+        if ($queryParams['age']) {
+            $profiles = $profileRepository->getUsersWithAge($queryParams['age'], $user[0]['id']);
+            $response->getBody()->write(json_encode($profiles));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
+
+        if ($queryParams['gender']) {
+            $profiles = $profileRepository->getUsersByGender($queryParams['gender'], $user[0]['id']);
+            $response->getBody()->write(json_encode($profiles));
+
+            return $response->withHeader('Content-Type', 'application/json');
+        }
+
+        if ($queryParams['attractiveness']) {
+            $profiles = $profileRepository->getUsersByAttractiveness($queryParams['attractiveness'], $user[0]['id']);
+            $response->getBody()->write(json_encode($profiles));
+
+            return $response->withHeader('Content-Type', 'application/json');
+        }
+
         $location = $queryParams['location'] !== '' ? $queryParams['location'] : null;
 
         $response->getBody()->write(json_encode($queryParams));
