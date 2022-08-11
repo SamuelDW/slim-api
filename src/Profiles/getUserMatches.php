@@ -7,6 +7,7 @@ namespace App\Profiles;
 use App\Matcher\MatchRepository;
 use App\User\UserRepository;
 use App\Profiles\ProfileRepository;
+use App\User\Success;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -29,32 +30,37 @@ final class getUserMatches
         if (!$queryParams) {
             $profiles = $profileRepository->getAllProfiles($user[0]['id']);
 
-            $response->getBody()->write(json_encode($profiles));
+            $success = Success::createSuccessResponse($profiles, $request->getMethod(), $request->getUri());
+            $response->getBody()->write(json_encode($success));
             return $response->withHeader('Content-Type', 'application/json');
         }
 
         if ($queryParams['age'] && $queryParams['gender']) {
             $profiles = $profileRepository->getUsersByGenderAndAge($queryParams['age'], $queryParams['gender'], $user[0]['id']);
-            $response->getBody()->write(json_encode($profiles));
+            $success = Success::createSuccessResponse($profiles, $request->getMethod(), $request->getUri());
+            $response->getBody()->write(json_encode($success));
             return $response->withHeader('Content-Type', 'application/json');
         }
 
         if ($queryParams['age']) {
             $profiles = $profileRepository->getUsersWithAge($queryParams['age'], $user[0]['id']);
-            $response->getBody()->write(json_encode($profiles));
+            $success = Success::createSuccessResponse($profiles, $request->getMethod(), $request->getUri());
+            $response->getBody()->write(json_encode($success));
             return $response->withHeader('Content-Type', 'application/json');
         }
 
         if ($queryParams['gender']) {
             $profiles = $profileRepository->getUsersByGender($queryParams['gender'], $user[0]['id']);
-            $response->getBody()->write(json_encode($profiles));
+            $success = Success::createSuccessResponse($profiles, $request->getMethod(), $request->getUri());
+            $response->getBody()->write(json_encode($success));
 
             return $response->withHeader('Content-Type', 'application/json');
         }
 
         if ($queryParams['attractiveness']) {
             $profiles = $profileRepository->getUsersByAttractiveness($queryParams['attractiveness'], $user[0]['id']);
-            $response->getBody()->write(json_encode($profiles));
+            $success = Success::createSuccessResponse($profiles, $request->getMethod(), $request->getUri());
+            $response->getBody()->write(json_encode($success));
 
             return $response->withHeader('Content-Type', 'application/json');
         }

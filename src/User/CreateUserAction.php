@@ -30,7 +30,9 @@ class CreateUserAction
             $email = 'test' . random_int(0, 100000) . '@test.com';
             $user = new User('test', $email, password_hash('test', PASSWORD_DEFAULT), 'Male', random_int(18, 100));
             $userRepository->createUser($user);
-            $response->getBody()->write('User created');
+
+            $success = Success::createSuccessResponse(['User created'], $request->getMethod(), $userData);
+            $response->getBody()->write(json_encode($success));
 
             return $response->withHeader('Content-Type', 'application/json');
             //$errors['Invalid Data'] = 'You are missing data. There should be name, email, age, gender and password';
@@ -57,6 +59,8 @@ class CreateUserAction
 
         $userRepository->createUser($user);
 
+        $success = Success::createSuccessResponse(['User created'], $request->getMethod(), $userData);
+        $response->getBody()->write(json_encode($success));
         return $response->withHeader('Content-Type', 'application/json');
     }
 }

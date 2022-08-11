@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Matcher;
 
 use App\Matcher\MatchRepository;
+use App\User\Success;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -24,7 +25,8 @@ final class MatchUsers
             $match = $matchRepository->createMatch($user, $match, $swipeDirection);
             $matchRepository->updateUserStatistics($match, $swipeDirection);
 
-            $response->getBody()->write(json_encode($matches));
+            $success = Success::createSuccessResponse($matches, $request->getMethod(), $matchData);
+            $response->getBody()->write(json_encode($success));
             return $response->withHeader('Content-Type', 'application/json');
         }
 
@@ -33,7 +35,8 @@ final class MatchUsers
 
         $newMatch = $matchRepository->doesMatchExist($user, $match);
         if ($newMatch[0]['match_swipe'] === "YES" && $newMatch[0]['user_swipe'] === "YES") {
-            $response->getBody()->write(json_encode($newMatch[0]));
+            $success = Success::createSuccessResponse($newMatch[0], $request->getMethod(), $request->getParsedBody());
+            $response->getBody()->write(json_encode($success));
             return $response->withHeader('Content-Type', 'application/json');
         }
 
