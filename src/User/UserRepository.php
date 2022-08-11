@@ -77,7 +77,10 @@ class UserRepository
 
     public function deleteUser($userId)
     {
-
+        $db = new DB();
+        $conn = $db->connect();
+        $stmt = $conn->prepare('DELETE FROM users WHERE id=:id');
+        $stmt->execute(['id' => $userId]);
     }
 
     public function findUserById($userId)

@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS user_photos (
 CREATE TABLE IF NOT EXISTS user_statistics (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id INT(6) UNSIGNED NOT NULL,
-    swipe_yes INT(6) UNSIGNED NOT NULL,
-    swipe_no INT(6) UNSIGNED NOT NULL,
+    swipe_yes INT(6) UNSIGNED DEFAULT 0 NOT NULL,
+    swipe_no INT(6) UNSIGNED DEFAULT 0 NOT NULL,
     attract_rating INT(3) UNSIGNED NOT NULL,
     CONSTRAINT FK_UserStatistics FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -31,6 +31,8 @@ CREATE TABLE IF NOT EXISTS user_matches (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id INT(6) UNSIGNED NOT NULL,
     match_id INT(6) UNSIGNED NOT NULL,
+    user_swipe VARCHAR(10),
+    match_swipe VARCHAR(10),
     CONSTRAINT FK_UserMatches FOREIGN KEY (user_id) REFERENCES users(id),
     CONSTRAINT FK_UserMatch FOREIGN KEY (match_id) REFERENCES users(id)
 );

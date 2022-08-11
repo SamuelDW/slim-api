@@ -6,6 +6,8 @@ use App\Auth\AuthenticateUser;
 use App\Matcher\MatchUsers;
 use App\Profiles\getUserMatches;
 use App\User\CreateUserAction;
+use App\User\DeleteUserAction;
+use App\User\UploadUserPhotos;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -13,9 +15,9 @@ return function (App $app) {
     $app->group('/user', function (RouteCollectorProxy $group) {
         $group->post('/create', CreateUserAction::class);
 
-        //$group->post('/gallery', CreateUserAction::class)->addMiddleware();
+        $group->post('/gallery', UploadUserPhotos::class);
 
-        // $group->delete('/delete', DeleteUserAction::class)->addMiddleware();
+        $group->delete('/delete/{id:[0-9]+}', DeleteUserAction::class);
     });
 
     $app->post('/login', AuthenticateUser::class);

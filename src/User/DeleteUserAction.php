@@ -9,18 +9,17 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class DeleteUserAction
 {
-    public function __invoke(Request $request, Response $response): Response
+    public function __invoke(Request $request, Response $response, array $args): Response
     {
-        $userData = $request->getParsedBody();
         $userRepository = new UserRepository();
-        $userExists = $userRepository->findUserByEmail($userData['email']);
+        $userExists = $userRepository->findUserById($args['id']);
         if (!$userExists) {
             return '';
         }
 
-        $userRepository->deleteUser($userExists['id']);
+        $userRepository->deleteUser($args['id']);
 
-        $response->getBody()->write('');
+        $response->getBody()->write(['User deleted']);
         return $response->withHeader('Content-Type', 'application/json');
     }
 }

@@ -32,11 +32,11 @@ I split out users and their data into four:
 
 ## Routes
 I listed out the routes that would be needed, to keep track of them
-1. /user/create [Post] (/user/{id} [Delete]) if there is time
+1. /user/create [Post] a registration form (/user/{id} [Delete]) would be a button on the users account
 2. /profiles/{id} [Get] Also exclude users already swiped on
-3. /swipe [Post]
-4. /login [Post]
-5. /user/gallery [Post]
+3. /swipe [Post] a simple card based left or right or thumbs up thumbs down button
+4. /login [Post] A simple login form on the front end
+5. /user/gallery [Post] This one would on the frontend be driven by a form where users upload their photos
 
 ## Filters
 1. /profiles?age=18,43&gender=x,y,z
@@ -65,3 +65,21 @@ Documented is the layout of the JSON Responses
 
     }
 }
+```
+
+## Filtering profiles
+I added the following filters to narrow profiles down
+1. lower_age & upper_age, if lower age is the only one provided, it should return everyone above that age and vice versa with upper_age. With Both, it will look for in between those two ranges
+2. lower_attract & upper_attract is identical to the first point in this section, and arrange according to this value
+3. location will sort users by distance to you
+
+## Issues
+1. swipe_direction would not allow a string to be added to database, only ever using null
+
+### Additions if there was time
+1. Add a user preferences table so that matches can be much more tailored to the user
+2. Add a way to get users close to the user
+3. Make use of repository constructors
+4. Tests
+5. Make authentication more robust and secure
+6. Better handling of errors
