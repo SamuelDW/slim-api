@@ -1,0 +1,28 @@
+create user
+	check post data correct
+	create user
+	try insert user
+		if fail return
+	return success
+
+get profiles
+	try get user
+		if fail return not found
+	if query exists update query
+	get matches which aren't user
+		if none return
+
+swipe user
+	try get user 
+		if fail return not found
+
+	try get match
+		if fail return not found
+
+	try get exisisting match
+		if fail create match
+
+	update record
+		if both yes return success
+
+a8bqe2sq78hqm90i8l6onrv8u1
