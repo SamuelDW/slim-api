@@ -87,6 +87,8 @@ Documented is the layout of the JSON Responses
 ```json
 {
     "apiVersion": "1.0.0",
+    "method": "GET",
+    "params": "original request data",
     "data": {
 
     }
